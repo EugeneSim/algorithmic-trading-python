@@ -1,0 +1,80 @@
+# Algorithmic Trading Strategy Configuration
+# All pipelines read from this file for reproducibility.
+
+universe:
+  name: "S&P 500"
+  constituents_file: "sp_500_stocks.csv"
+  use_survivorship_free: false  # Set true when point-in-time constituent data available
+
+data:
+  primary: "iex"       # iex | yfinance
+  fallback: "yfinance"
+  batch_size: 100
+
+strategies:
+  equal_weight:
+    enabled: true
+    top_n: null       # null = all constituents
+
+  momentum:
+    enabled: true
+    top_n: 50
+    time_periods: ["One-Year", "Six-Month", "Three-Month", "One-Month"]
+    # Alternative momentum options
+    use_52w_high_proximity: false
+    use_risk_adjusted_momentum: false
+
+  value:
+    enabled: true
+    top_n: 50
+    metrics: ["PE", "PB", "PS", "EV_EBITDA", "EV_GP"]
+    # Alternative value options
+    use_fcf_yield: false
+    use_earnings_yield: false
+    use_dividend_yield: false
+
+  multi_factor:
+    enabled: true
+    top_n: 50
+    factors:
+      value: 0.33
+      momentum: 0.33
+      quality: 0.34
+    quality_metrics: ["ROE", "earnings_stability"]
+
+  sector:
+    neutral: false    # true = sector-neutral weights
+    tilt: null        # e.g. {"Technology": 1.2, "Energy": 0.8}
+
+portfolio:
+  weighting: "equal"  # equal | risk_parity | volatility | conviction | min_variance | max_sharpe
+  conviction_power: 1.0  # For conviction weighting: weight ~ score^power
+  min_weight: 0.005
+  max_weight: 0.10
+
+filters:
+  quality_overlay: false
+  min_roe: 0.10
+  low_vol_overlay: false
+  max_volatility_pct: 0.50
+
+backtest:
+  start_date: "2010-01-01"
+  end_date: null      # null = latest
+  rebalance_freq: "M" # M = monthly, W = weekly
+  initial_capital: 100000
+
+walk_forward:
+  train_months: 60
+  test_months: 12
+  step_months: 12
+
+monte_carlo:
+  n_simulations: 1000
+  block_bootstrap: true
+  block_size: 12      # months
+
+output:
+  excel_dir: "output"
+  report_dir: "reports"
+  dashboard_format: "html"  # html | pdf
