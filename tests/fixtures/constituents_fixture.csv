@@ -1,0 +1,11 @@
+Ticker,Security,GICS Sector,GICS Sub-Industry
+AAPL,Apple Inc,Information Technology,Technology Hardware
+MSFT,Microsoft Corporation,Information Technology,Systems Software
+GOOGL,Alphabet Inc Class A,Communication Services,Interactive Media
+AMZN,Amazon.com Inc,Consumer Discretionary,Internet Retail
+META,Meta Platforms Inc,Communication Services,Interactive Media
+JPM,JPMorgan Chase,Financials,Banks
+V,Visa Inc,Information Technology,Data Processing
+WMT,Walmart Inc,Consumer Staples,Hypermarkets
+PG,Procter & Gamble,Consumer Staples,Personal Products
+JNJ,Johnson & Johnson,Health Care,Pharmaceuticals
